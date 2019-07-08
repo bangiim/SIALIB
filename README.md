@@ -9,9 +9,9 @@ SIALIB is a project created based on the needs of the administration of the Gont
 **Download & Preview on [AdminLTE.IO](https://adminlte.io)**
 
 ## Feature
-1. Upload data skripsi
-2. Manajemen Keuangan
-  - Pemasukan
-  - Pengeluaran
-3. Manajemen User
+1. Upload thesis data
+2. Financial management
+- Entry
+- Spending
+3. User Management
 
