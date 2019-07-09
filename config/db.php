@@ -1,3 +1,3 @@
 <?php
-	$connect = mysqli_connect("localhost","root","","dbmotor");
+	$connect = mysqli_connect("localhost","root","","dbsialib");
 ?>

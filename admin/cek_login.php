@@ -1,27 +1,28 @@
 <?php
-require_once "../config/koneksi.php";
+require_once "../config/db.php";
 require_once "../config/fungsi_antiinjection.php";
 
 $username = anti_injection($_POST['username']);
 $password = anti_injection($_POST['password']);
 
     // perlu dibuat sebarang pengacak
-    $pengacak  = "B4P@KUN!D490nToR102496B15M!LL4H";
+    $pengacak  = "L1BR4rYUN!D490nToR102496B15M!LL4H";
 
     // mengenkripsi password dengan md5() dan pengacak
     $pass_enkripsi = md5($pengacak . md5($password) . $pengacak);
 
 // menghindari sql injection
-$injeksi_username = mysqli_real_escape_string($konek, $username);
-$injeksi_password = mysqli_real_escape_string($konek, $pass_enkripsi);
+$injeksi_username = mysqli_real_escape_string($connect, $username);
+$injeksi_password = mysqli_real_escape_string($connect, $pass_enkripsi);
 
 // pastikan username dan password adalah berupa huruf atau angka.
 if (!ctype_alnum($injeksi_username) OR !ctype_alnum($injeksi_password)){
-  echo "Sekarang loginnya tidak bisa di injeksi lho.";
+  echo "<script>window.alert('Sekarang loginnya tidak bisa di injeksi lho.');
+        self.history.back();</script>";
 }
 else{
-  $query  = "SELECT * FROM users WHERE username='$username' AND password='$pass_enkripsi'";
-  $login  = mysqli_query($konek, $query);
+  $query  = "SELECT * FROM users WHERE username='admin' AND password='admin'";
+  $login  = mysqli_query($connect, $query);
   $ketemu = mysqli_num_rows($login);
   $r      = mysqli_fetch_array($login); 
 
@@ -45,14 +46,16 @@ else{
     $sid_lama = session_id();
 	  session_regenerate_id();
     $sid_baru = session_id();
-    mysqli_query($konek, "UPDATE users SET id_session='$sid_baru' WHERE username='$username'");
+    mysqli_query($connect, "UPDATE users SET id_session='$sid_baru' WHERE username='$username'");
     
     //echo "masuk";
     header("location:media.php?module=dashboard");
   }
   else{
-    echo "<div id=\"login\"><h1 class=\"fail\">Login Gagal! Username & Password salah.</h1>";
-    echo "<p class=\"fail\"><a href=\"index.php\">Ulangi Lagi</a></p></div>";  
+    echo "
+    <script>window.alert('Login Gagal !! ..Username & Password salah..');
+        self.history.back();</script>
+    ";  
   }
 }
 ?>
