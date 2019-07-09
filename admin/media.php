@@ -3,7 +3,7 @@ session_start();
 // Apabila user belum login
 if (empty($_SESSION['namauser']) AND empty($_SESSION['passuser'])){
   echo  "<script>window.alert('Untuk mengakses modul, Anda harus login dulu.');
-        self.history.back();</script>";  
+        window.location = 'index.php'</script>";  
 }
 // Apabila user sudah login dengan benar, maka terbentuklah session
 else{
@@ -38,6 +38,8 @@ else{
   <link rel="stylesheet" href="../bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="../bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -54,7 +56,7 @@ else{
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="../index.php" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>SIA</b>LIB</span>
       <!-- logo for regular state and mobile devices -->
@@ -366,6 +368,32 @@ else{
 <script src="../dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../dist/js/demo.js"></script>
+<!-- DataTables -->
+<script src="../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+<!-- page script -->
+<script>
+  $(function () {
+    $('#example1').DataTable()
+    $('#example11').DataTable()
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+    })
+  })
+
+  //Date picker
+  $('#datepicker').datepicker({
+    format: 'yyyy-dd-mm',
+    autoclose: true
+  })
+</script>
+
 </body>
 </html>
 <?php

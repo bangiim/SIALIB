@@ -2,7 +2,7 @@
 // Apabila user belum login
 if (empty($_SESSION['namauser']) AND empty($_SESSION['passuser'])){
     echo  "<script>window.alert('Untuk mengakses modul, Anda harus login dulu.');
-        self.history.back();</script>";  
+        window.location = 'index.php'</script>";  
 }
 // Apabila user sudah login dengan benar, maka terbentuklah session
 
@@ -31,14 +31,14 @@ else{
             <span class="input-group-btn">
                 <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
                 </button>
-                </span>
+            </span>
         </div>
     </form>
     <!-- /.search form -->
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
-        <li class="active treeview">
+        <li class="active">
             <a href="?module=dashboard">
                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
             </a>
@@ -63,20 +63,23 @@ else{
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-plus"></i> Pemasukan</a></li>
-                <li><a href="#"><i class="fa fa-minus"></i> Pengeluaran</a></li>
-                <li><a href="#"><i class="fa fa-print"></i> Laporan Keuangan</a></li>
+                <li><a href="?module=keuangan"><i class="fa fa-usd"></i> Kelola Keuangan</a></li>
+                <li><a href="modules/keuangan/print_data.php" target="blank"><i class="fa fa-print"></i> Laporan Keuangan</a></li>
             </ul>
         </li>
-        <li class="treeview">
-            <a href="?module=user">
-                <i class="fa fa-users"></i> <span>Users</span>
-            </a>
+        <li>
+          <a href="?module=user">
+            <i class="fa fa-users"></i> <span>Manajemen User</span>
+          </a>
+        </li>
+        <li>
+          <a href="?module=identitas">
+            <i class="fa fa-gears"></i> <span>Settings Web</span>
+          </a>
         </li>
         <li class="header">LABELS</li>
-        <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
+        <li><a href="../index.php" target="blank"><i class="fa fa-circle-o text-green"></i> <span>View Website</span></a></li>
+        <li><a href="logout.php"><i class="fa fa-circle-o text-red"></i> <span>Logout</span></a></li>
     </ul>
 </section>
 <?php

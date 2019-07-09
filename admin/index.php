@@ -55,11 +55,15 @@
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+          <button type="submit" class="btn btn-success btn-block btn-flat">Sign In</button>
         </div>
         <!-- /.col -->
       </div>
     </form>
+          <div class="social-auth-links text-center">
+            <a href="../" class="btn btn-block btn-social btn-primary btn-flat"><i class="fa fa-angle-double-left"></i> Back to Home</a>
+          </div>
+      
 
   </div>
   <!-- /.login-box-body -->
