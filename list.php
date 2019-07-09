@@ -101,64 +101,44 @@
                                     <div class="col-xs-12">
                                         <!-- /.box-header -->
                                         <div class="box-body">
-                                            <table id="example1" class="table table-bordered table-striped">
-                                                <thead>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-hover" id="example1">
+                                                  <thead>
                                                     <tr>
-                                                        <th>Judul</th>
-                                                        <th>Penyusun</th>
-                                                        <th>Tahun</th>
-                                                        <th>Prodi</th>
-                                                        <th>Action</th>
+                                                      <th>NO</th>
+                                                      <th>PENULIS</th>
+                                                      <th>JUDUL</th>
+                                                      <th>TAHUN</th> 
+                                                      <th>PRODI</th>
+                                                      <th>AKSI</th>
                                                     </tr>
-                                                </thead>
-                                                <tbody>
+                                                  </thead>
+                                                  <tbody>
+                                                    <?php
+                                                    require_once('config/db.php');
+                                                    $query  = "SELECT * FROM skripsi ORDER BY author";
+                                                    $tampil = mysqli_query($connect, $query);
+                                                    $no = 1;
+                                                    while ($r=mysqli_fetch_array($tampil)){
+                                                    ?>
                                                     <tr>
-                                                        <td>Program</td>
-                                                        <td>Rizalee
-                                                        </td>
-                                                        <td>Bla bal</td>
-                                                        <td>2019</td>
-                                                        <td align="center">
-                                                            <a class="btn btn-xs btn-primary">
-                                                                <i class="fa fa-edit"></i> Edit
-                                                            </a>
-                                                            <a class="btn btn-xs btn-success">
-                                                                <i class="fa fa-download"></i> Download
-                                                            </a>
-                                                            <a class="btn btn-xs btn-danger">
-                                                                <i class="fa fa-trash-o"></i> Delete
-                                                            </a>
-                                                        </td>
+                                                      <td><?php echo $no; ?></td>          
+                                                      <td><?php echo $r['author']?></td>
+                                                      <td><?php echo $r['title']?></td>
+                                                      <td><?php echo $r['year']?></td>
+                                                      <td><?php echo $r['prodi']?></td>
+                                                      <td>
+                                                        <a class="btn btn-success" href="#"><i class="fa fa-eye"></i></a>
+                                                        
+                                                      </td>
                                                     </tr>
-                                                    <tr>
-                                                        <td>Tolong..!</td>
-                                                        <td>Rizalee
-                                                        </td>
-                                                        <td>Bla bal</td>
-                                                        <td>2019</td>
-                                                        <td align="center">
-                                                            <a class="btn btn-xs btn-primary">
-                                                                <i class="fa fa-edit"></i> Edit
-                                                            </a>
-                                                            <a class="btn btn-xs btn-success">
-                                                                <i class="fa fa-download"></i> Download
-                                                            </a>
-                                                            <a class="btn btn-xs btn-danger">
-                                                                <i class="fa fa-trash-o"></i> Delete
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                        <th>Judul</th>
-                                                        <th>Penyusun</th>
-                                                        <th>Tahun</th>
-                                                        <th>Prodi</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
+                                                    <?php
+                                                      $no++;
+                                                    }
+                                                    ?>
+                                                  </tbody>
+                                                </table>
+                                              </div>
                                         </div>
                                         <!-- /.box-body -->
                                     </div>

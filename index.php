@@ -95,7 +95,7 @@
           <!-- general form elements -->
           <div class="box box-warning col-lg-12">
             <!-- form start -->
-            <form role="form">
+            <form enctype="multipart/form-data" method="POST" <?php echo "action=\"action.php?act=upload\""; ?>>
               <div class="box-body">
                 <div class="form-group">
                   <label for="judul">Judul</label>
@@ -109,17 +109,18 @@
                   <label for="abstrak">Abstarak</label>
                   <textarea class="form-control" name="abstract" row="3" placeholder="Abstrak" required></textarea>
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label class="control-label">Kategori</label>
                   <select name="category" class="form-control">
                     <option value="Skripsi">Skripsi</option>
                     <option value="Tesis">Tesis</option>
                   </select>
-                </div>
+                </div> -->
                 <!-- tahun -->
                 <div class="form-group">
                   <label class="control-label">Tahun</label>
                   <select name="year" class="form-control">
+                    <option>-- Please select --</option>
                     <option value="2018">2018</option>
                     <option value="2019">2019</option>
                     <option value="2020">2020</option>
@@ -129,6 +130,7 @@
                 <div class="form-group">
                   <label class="control-label">Fakultas</label>
                     <select name="fakultas" class="form-control">
+                      <option>-- Please select --</option>
                       <option value="Ushuluddin">Ushuluddin</option>
                       <option value="Tarbiyah">Tarbiyah</option>
                       <option value="Shariah">Shariah</option>
@@ -143,23 +145,24 @@
                 <div class="form-group">
                   <label class="control-label">Prodi</label>
                     <select name="prodi" class="form-control">
-                      <option value="SAA">SAA</option>
-                      <option value="IQT">IQT</option>
-                      <option value="AFI">AFI</option>
-                      <option value="PAI">PAI</option>
-                      <option value="PBA">PBA</option>
-                      <option value="HES">HES</option>
-                      <option value="XXX">XXX</option>
-                      <option value="EI">EI</option>
-                      <option value="MB">MB</option>
-                      <option value="HI">HI</option>
-                      <option value="ILKOM">ILKOM</option>
-                      <option value="TI">TI</option>
-                      <option value="AGROTEK">AGROTEK</option>
-                      <option value="TIP">TIP</option>
-                      <option value="FARMASI">FARMASI</option>
-                      <option value="GIZI">GIZI</option>
-                      <option value="KKK">KKK</option>
+                      <option>-- Please select --</option>
+                      <option value="Pendidikan Agama Islam">Pendidikan Agama Islam</option>
+                      <option value="Pendidikan Bahasa Arab">Pendidikan Bahasa Arab</option>
+                      <option value="Aqidah Filsafat Islam">Aqidah Filsafat Islam</option>
+                      <option value="Studi Agama - Agama">Studi Agama - Agama</option>
+                      <option value="Ilmu Quran dan Tafsir">Ilmu Quran dan Tafsir</option>
+                      <option value="Perbandingan Mazhab dan Hukum">Perbandingan Mazhab dan Hukum</option>
+                      <option value="Hukum Ekonomi Syariah">Hukum Ekonomi Syariah</option>
+                      <option value="Teknik Informatika">Teknik Informatika</option>
+                      <option value="Teknologi Industri Pertanian">Teknologi Industri Pertanian</option>
+                      <option value="Agro Teknologi">Agro Teknologi</option>
+                      <option value="Hubungan Internasional">Hubungan Internasional</option>
+                      <option value="Ilmu Komunikasi">Ilmu Komunikasi</option>
+                      <option value="Farmasi">Farmasi</option>
+                      <option value="Nutrition">Nutrition</option>
+                      <option value="Keselamatan dan Kesehatan Kerj">Keselamatan dan Kesehatan Kerja</option>
+                      <option value="Ekonomi Islam">Ekonomi Islam</option>
+                      <option value="Manajemen Bisnis">Manajemen Bisnis</option>
                     </select>
                 </div>
                 <div class="form-group">
