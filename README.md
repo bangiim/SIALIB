@@ -16,4 +16,4 @@ SIALIB is a project created based on the needs of the administration of the Gont
 3. User Management
 
 ## Preview
-<a href="https://ibb.co/7QqY46Q"><img src="https://i.screenshot.net/lr85wt5" alt="dashboard" border="0" width="100%"></a>
+<img src="https://i.screenshot.net/lr85wt5" alt="dashboard" border="0" width="100%">
