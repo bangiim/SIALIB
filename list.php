@@ -105,12 +105,12 @@
                                                 <table class="table table-bordered table-hover" id="example1">
                                                   <thead>
                                                     <tr>
-                                                      <th>NO</th>
-                                                      <th>PENULIS</th>
-                                                      <th>JUDUL</th>
-                                                      <th>TAHUN</th> 
-                                                      <th>PRODI</th>
-                                                      <th>AKSI</th>
+                                                      <th width="5px">NO</th>
+                                                      <th width="10px">PENULIS</th>
+                                                      <th width="30px">JUDUL</th>
+                                                      <th width="10px">TAHUN</th> 
+                                                      <th width="40px">PRODI</th>
+                                                      <th width="5px">AKSI</th>
                                                     </tr>
                                                   </thead>
                                                   <tbody>

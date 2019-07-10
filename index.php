@@ -95,8 +95,12 @@
           <!-- general form elements -->
           <div class="box box-warning col-lg-12">
             <!-- form start -->
-            <form enctype="multipart/form-data" method="POST" <?php echo "action=\"action.php?act=upload\""; ?>>
+            <form enctype="multipart/form-data" method="POST" action="action.php">
               <div class="box-body">
+                <div class="form-group">
+                  <label for="judul">NIM</label>
+                  <input type="text" class="form-control" name="nim" placeholder="NIM" required>
+                </div> 
                 <div class="form-group">
                   <label for="judul">Judul</label>
                   <input type="text" class="form-control" name="title" placeholder="judul" required>
@@ -171,7 +175,7 @@
                   <p class="help-block">Upload file berbentuk pdf</p>
                 </div>
                 <div class="box-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" class="btn btn-primary" name="upload">Submit</button>
                 </div>
               </div>
             </form>
