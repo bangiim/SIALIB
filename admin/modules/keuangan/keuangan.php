@@ -62,98 +62,374 @@ else{
 
           	<div class="nav-tabs-custom ">
 		        <ul class="nav nav-tabs pull-right">
-		          	<li class="active"><a href="#tab_1" data-toggle="tab"><b>Pemasukan</b></a></li>
-		          	<li><a href="#tab_2" data-toggle="tab"><b>Pengeluaran</b></a></li>
+		          	<li><a href="#tab_5" data-toggle="tab">Kartu</a></li>
+		          	<li><a href="#tab_4" data-toggle="tab">Jurnal</a></li>
+		          	<li><a href="#tab_3" data-toggle="tab">Buku</a></li>
+		          	<li><a href="#tab_2" data-toggle="tab">Fotocopy</a></li>
+		          	<li class="active"><a href="#tab_1" data-toggle="tab">Denda</a></li>
+		          	<li class="pull-left header"><i class="fa fa-money"></i> <b>Total Uang</b></li>
 		        </ul>
 		        <div class="tab-content">
-		        	<!-- Pemasukan -->
+		        	<!-- Denda -->
 			        <div class="tab-pane active" id="tab_1">
 			        	<?php
-			        		$query  = "SELECT * FROM keuangan WHERE status = 'Pemasukan' ORDER BY id_keuangan";
+			        		$query = "SELECT * FROM keuangan WHERE jenis='Denda' ORDER BY id_keuangan";
    							$masuk = mysqli_query($connect, $query);
+
+   							$query1  = mysqli_fetch_array(mysqli_query($connect, "SELECT status , SUM(jumlah) AS denda_plus FROM keuangan WHERE status = 'Pemasukan' and jenis = 'Denda'"));
+				             $query2 = mysqli_fetch_array(mysqli_query($connect, "SELECT status , SUM(jumlah) AS denda_min FROM keuangan WHERE status = 'Pengeluaran' and jenis = 'Denda'"));
+				              
+				            $total = $query1['denda_plus'] - $query2['denda_min'];
+				            $for = number_format($total,0,",",".");
 			        	?>
 			        	<div class="table-responsive">
-				            <table class="table table-bordered table-hover" id="example1">
-				              <thead>
-				                <tr>
-				                  <th>NO</th>
-				                  <th>STATUS</th>
-				                  <th>TANGGAL</th>
-				                  <th>JENIS</th>
-				                  <th>KETERANGAN</th>
-				                  <th>JUMLAH</th> 
-				                  <th>AKSI</th>
-				                </tr>
-				              </thead>
-				              <tbody>
-				                <?php
-				                $no = 1;
-				                while ($r=mysqli_fetch_array($masuk)){
-				                ?>
-				                <tr>
-				                  <td><?php echo $no; ?></td>
-				                  <td><?php echo $r['status']?></td>          
-				                  <td><?php echo $r['tgl']?></td>
-				                  <td><?php echo $r['jenis']?></td>
-				                  <td><?php echo $r['keterangan']?></td>
-				                  <td>Rp. <?php echo $r['jumlah']?></td>
-				                  <td>
-				                    <a class="btn btn-success" href="?module=keuangan&act=edit&id=<?php echo $r['id_keuangan']; ?>"><i class="fa fa-edit"></i></a>
-				                    <a class="btn btn-danger" onclick="return confirm('Apakah anda yakin akan menghapus data ini?')" <?php echo "href=\"$aksi?module=keuangan&act=delete&id=$r[id_keuangan]\""; ?>><i class="fa fa-trash"></i></a>
-				                  </td>
-				                </tr>
-				                <?php
-				                  $no++;
-				                }
-				                ?>
-				              </tbody>
+				            <table class="table table-bordered table-striped table-hover" id="example1">
+				              	<thead>
+					                <tr>
+					                  <th>NO</th>
+					                  <th>PJ</th>
+					                  <th>STATUS</th>
+					                  <th>TANGGAL</th>
+					                  <th>KETERANGAN</th>
+					                  <th>JUMLAH</th> 
+					                  <th>AKSI</th>
+					                </tr>
+				              	</thead>
+				              	<tbody>
+				                	<?php
+					                $no = 1;
+					                while ($r=mysqli_fetch_array($masuk)){
+					                	$idr       = $r['jumlah'];
+	    								$masuk_for = number_format($idr,0,",",".");
+					                ?>
+				                	<tr>
+					                  	<td><?php echo $no; ?></td>
+					                  	<td><?php echo $r['username']?></td>
+					                  	<td>
+							            	<?php
+							            		if ($r['status']=='Pemasukan') {
+							            			echo"<span class='badge bg-green'>$r[status]</span>";
+							            		}
+							            		else{
+							            			echo"<span class='badge bg-yellow'>$r[status]</span>";
+							            		}
+							            	?>
+							            </td>          
+					                  	<td><?php echo $r['tgl']?></td>
+					                  	<td><?php echo $r['keterangan']?></td>
+					                  	<td>Rp. <?php echo $masuk_for ?></td>
+					                  	<td>
+						                    <a class="btn btn-success" href="?module=keuangan&act=edit&id=<?php echo $r['id_keuangan']; ?>"><i class="fa fa-edit"></i></a>
+						                    <a class="btn btn-danger" onclick="return confirm('Apakah anda yakin akan menghapus data ini?')" <?php echo "href=\"$aksi?module=keuangan&act=delete&id=$r[id_keuangan]\""; ?>><i class="fa fa-trash"></i></a>
+					                  	</td>
+				                	</tr>
+					                <?php
+					                  $no++;
+					                }
+					                ?>
+				              	</tbody>
+				              	<tfoot>
+					              	<tr>
+					                  <td align="center" colspan="7" >
+					                  	<h2>
+					                  		<small>Saldo: </small>
+					                  		Rp. <?php echo $for; ?>
+					                  	</h2>
+					                  	
+					                  </td>
+					                </tr>
+				              	</tfoot>
 				            </table>
 			            </div>
 			        </div>
-		          	<!-- Pengeluaran -->
-		          	<div class="tab-pane" id="tab_2">
-		          		<?php
-			        		$query  = "SELECT * FROM keuangan WHERE status = 'Pengeluaran' ORDER BY id_keuangan";
-   							$keluar = mysqli_query($connect, $query);
+			        <!-- Fotocopy -->
+			        <div class="tab-pane" id="tab_2">
+			        	<?php
+			        		$query = "SELECT * FROM keuangan WHERE jenis='Fotocopy' ORDER BY id_keuangan";
+   							$masuk = mysqli_query($connect, $query);
+
+   							$query1  = mysqli_fetch_array(mysqli_query($connect, "SELECT status , SUM(jumlah) AS fc_plus FROM keuangan WHERE status = 'Pemasukan' and jenis = 'Fotocopy'"));
+				             $query2 = mysqli_fetch_array(mysqli_query($connect, "SELECT status , SUM(jumlah) AS fc_min FROM keuangan WHERE status = 'Pengeluaran' and jenis = 'Fotocopy'"));
+				              
+				            $total = $query1['fc_plus'] - $query2['fc_min'];
+				            $for = number_format($total,0,",",".");
 			        	?>
-		          		<div class="table-responsive">
-				            <table class="table table-bordered table-hover" id="example11">
-				              <thead>
-				                <tr>
-				                  <th>NO</th>
-				                  <th>STATUS</th>
-				                  <th>TANGGAL</th>
-				                  <th>JENIS</th>
-				                  <th>KETERANGAN</th>
-				                  <th>JUMLAH</th> 
-				                  <th>AKSI</th>
-				                </tr>
-				              </thead>
-				              <tbody>
-				                <?php
-				                $no = 1;
-				                while ($r=mysqli_fetch_array($keluar)){
-				                ?>
-				                <tr>
-				                  <td><?php echo $no; ?></td>
-				                  <td><?php echo $r['status']?></td>          
-				                  <td><?php echo $r['tgl']?></td>
-				                  <td><?php echo $r['jenis']?></td>
-				                  <td><?php echo $r['keterangan']?></td>
-				                  <td>Rp. <?php echo $r['jumlah']?></td>
-				                  <td>
-				                    <a class="btn btn-success" href="?module=keuangan&act=edit&id=<?php echo $r['id_keuangan']; ?>"><i class="fa fa-edit"></i></a>
-				                    <a class="btn btn-danger" onclick="return confirm('Apakah anda yakin akan menghapus data ini?')" <?php echo "href=\"$aksi?module=keuangan&act=delete&id=$r[id_keuangan]\""; ?>><i class="fa fa-trash"></i></a>
-				                  </td>
-				                </tr>
-				                <?php
-				                  $no++;
-				                }
-				                ?>
-				              </tbody>
+			        	<div class="table-responsive">
+				            <table class="table table-bordered table-striped table-hover" id="example11">
+				              	<thead>
+					                <tr>
+					                  <th>NO</th>
+					                  <th>PJ</th>
+					                  <th>STATUS</th>
+					                  <th>TANGGAL</th>
+					                  <th>KETERANGAN</th>
+					                  <th>JUMLAH</th> 
+					                  <th>AKSI</th>
+					                </tr>
+				              	</thead>
+				              	<tbody>
+				                	<?php
+					                $no = 1;
+					                while ($r=mysqli_fetch_array($masuk)){
+					                	$idr       = $r['jumlah'];
+	    								$masuk_for = number_format($idr,0,",",".");
+					                ?>
+				                	<tr>
+					                  	<td><?php echo $no; ?></td>
+					                  	<td><?php echo $r['username']?></td>
+					                  	<td>
+							            	<?php
+							            		if ($r['status']=='Pemasukan') {
+							            			echo"<span class='badge bg-green'>$r[status]</span>";
+							            		}
+							            		else{
+							            			echo"<span class='badge bg-yellow'>$r[status]</span>";
+							            		}
+							            	?>
+							            </td>          
+					                  	<td><?php echo $r['tgl']?></td>
+					                  	<td><?php echo $r['keterangan']?></td>
+					                  	<td>Rp. <?php echo $masuk_for ?></td>
+					                  	<td>
+						                    <a class="btn btn-success" href="?module=keuangan&act=edit&id=<?php echo $r['id_keuangan']; ?>"><i class="fa fa-edit"></i></a>
+						                    <a class="btn btn-danger" onclick="return confirm('Apakah anda yakin akan menghapus data ini?')" <?php echo "href=\"$aksi?module=keuangan&act=delete&id=$r[id_keuangan]\""; ?>><i class="fa fa-trash"></i></a>
+					                  	</td>
+				                	</tr>
+					                <?php
+					                  $no++;
+					                }
+					                ?>
+				              	</tbody>
+				              	<tfoot>
+					              	<tr>
+					                  <td align="center" colspan="7" >
+					                  	<h2>
+					                  		<small>Saldo: </small>
+					                  		Rp. <?php echo $for; ?>
+					                  	</h2>
+					                  	
+					                  </td>
+					                </tr>
+				              	</tfoot>
 				            </table>
 			            </div>
-		          	</div>
+			        </div>
+			        <!-- Buku -->
+			        <div class="tab-pane" id="tab_3">
+			        	<?php
+			        		$query = "SELECT * FROM keuangan WHERE jenis='Buku' ORDER BY id_keuangan";
+   							$masuk = mysqli_query($connect, $query);
+
+   							$query1  = mysqli_fetch_array(mysqli_query($connect, "SELECT status , SUM(jumlah) AS buku_plus FROM keuangan WHERE status = 'Pemasukan' and jenis = 'Buku'"));
+				             $query2 = mysqli_fetch_array(mysqli_query($connect, "SELECT status , SUM(jumlah) AS buku_min FROM keuangan WHERE status = 'Pengeluaran' and jenis = 'Buku'"));
+				              
+				            $total = $query1['buku_plus'] - $query2['buku_min'];
+				            $for = number_format($total,0,",",".");
+			        	?>
+			        	<div class="table-responsive">
+				            <table class="table table-bordered table-striped table-hover" id="example12">
+				              	<thead>
+					                <tr>
+					                  <th>NO</th>
+					                  <th>PJ</th>
+					                  <th>STATUS</th>
+					                  <th>TANGGAL</th>
+					                  <th>KETERANGAN</th>
+					                  <th>JUMLAH</th> 
+					                  <th>AKSI</th>
+					                </tr>
+				              	</thead>
+				              	<tbody>
+				                	<?php
+					                $no = 1;
+					                while ($r=mysqli_fetch_array($masuk)){
+					                	$idr       = $r['jumlah'];
+	    								$masuk_for = number_format($idr,0,",",".");
+					                ?>
+				                	<tr>
+					                  	<td><?php echo $no; ?></td>
+					                  	<td><?php echo $r['username']?></td>
+					                  	<td>
+							            	<?php
+							            		if ($r['status']=='Pemasukan') {
+							            			echo"<span class='badge bg-green'>$r[status]</span>";
+							            		}
+							            		else{
+							            			echo"<span class='badge bg-yellow'>$r[status]</span>";
+							            		}
+							            	?>
+							            </td>          
+					                  	<td><?php echo $r['tgl']?></td>
+					                  	<td><?php echo $r['keterangan']?></td>
+					                  	<td>Rp. <?php echo $masuk_for ?></td>
+					                  	<td>
+						                    <a class="btn btn-success" href="?module=keuangan&act=edit&id=<?php echo $r['id_keuangan']; ?>"><i class="fa fa-edit"></i></a>
+						                    <a class="btn btn-danger" onclick="return confirm('Apakah anda yakin akan menghapus data ini?')" <?php echo "href=\"$aksi?module=keuangan&act=delete&id=$r[id_keuangan]\""; ?>><i class="fa fa-trash"></i></a>
+					                  	</td>
+				                	</tr>
+					                <?php
+					                  $no++;
+					                }
+					                ?>
+				              	</tbody>
+				              	<tfoot>
+					              	<tr>
+					                  <td align="center" colspan="7" >
+					                  	<h2>
+					                  		<small>Saldo: </small>
+					                  		Rp. <?php echo $for; ?>
+					                  	</h2>
+					                  	
+					                  </td>
+					                </tr>
+				              	</tfoot>
+				            </table>
+			            </div>
+			        </div>
+			        <!-- Jurnal -->
+			        <div class="tab-pane" id="tab_4">
+			        	<?php
+			        		$query = "SELECT * FROM keuangan WHERE jenis='Jurnal' ORDER BY id_keuangan";
+   							$masuk = mysqli_query($connect, $query);
+
+   							$query1  = mysqli_fetch_array(mysqli_query($connect, "SELECT status , SUM(jumlah) AS jr_plus FROM keuangan WHERE status = 'Pemasukan' and jenis = 'Jurnal'"));
+				             $query2 = mysqli_fetch_array(mysqli_query($connect, "SELECT status , SUM(jumlah) AS jr_min FROM keuangan WHERE status = 'Pengeluaran' and jenis = 'Jurnal'"));
+				              
+				            $total = $query1['jr_plus'] - $query2['jr_min'];
+				            $for = number_format($total,0,",",".");
+			        	?>
+			        	<div class="table-responsive">
+				            <table class="table table-bordered table-striped table-hover" id="example13">
+				              	<thead>
+					                <tr>
+					                  <th>NO</th>
+					                  <th>PJ</th>
+					                  <th>STATUS</th>
+					                  <th>TANGGAL</th>
+					                  <th>KETERANGAN</th>
+					                  <th>JUMLAH</th> 
+					                  <th>AKSI</th>
+					                </tr>
+				              	</thead>
+				              	<tbody>
+				                	<?php
+					                $no = 1;
+					                while ($r=mysqli_fetch_array($masuk)){
+					                	$idr       = $r['jumlah'];
+	    								$masuk_for = number_format($idr,0,",",".");
+					                ?>
+				                	<tr>
+					                  	<td><?php echo $no; ?></td>
+					                  	<td><?php echo $r['username']?></td>
+					                  	<td>
+							            	<?php
+							            		if ($r['status']=='Pemasukan') {
+							            			echo"<span class='badge bg-green'>$r[status]</span>";
+							            		}
+							            		else{
+							            			echo"<span class='badge bg-yellow'>$r[status]</span>";
+							            		}
+							            	?>
+							            </td>          
+					                  	<td><?php echo $r['tgl']?></td>
+					                  	<td><?php echo $r['keterangan']?></td>
+					                  	<td>Rp. <?php echo $masuk_for ?></td>
+					                  	<td>
+						                    <a class="btn btn-success" href="?module=keuangan&act=edit&id=<?php echo $r['id_keuangan']; ?>"><i class="fa fa-edit"></i></a>
+						                    <a class="btn btn-danger" onclick="return confirm('Apakah anda yakin akan menghapus data ini?')" <?php echo "href=\"$aksi?module=keuangan&act=delete&id=$r[id_keuangan]\""; ?>><i class="fa fa-trash"></i></a>
+					                  	</td>
+				                	</tr>
+					                <?php
+					                  $no++;
+					                }
+					                ?>
+				              	</tbody>
+				              	<tfoot>
+					              	<tr>
+					                  <td align="center" colspan="7" >
+					                  	<h2>
+					                  		<small>Saldo: </small>
+					                  		Rp. <?php echo $for; ?>
+					                  	</h2>
+					                  	
+					                  </td>
+					                </tr>
+				              	</tfoot>
+				            </table>
+			            </div>
+			        </div>
+			        <!-- Kartu -->
+			        <div class="tab-pane" id="tab_5">
+			        	<?php
+			        		$query = "SELECT * FROM keuangan WHERE jenis='Kartu' ORDER BY id_keuangan";
+   							$masuk = mysqli_query($connect, $query);
+
+   							$query1  = mysqli_fetch_array(mysqli_query($connect, "SELECT status , SUM(jumlah) AS kta_plus FROM keuangan WHERE status = 'Pemasukan' and jenis = 'Kartu'"));
+				             $query2 = mysqli_fetch_array(mysqli_query($connect, "SELECT status , SUM(jumlah) AS kta_min FROM keuangan WHERE status = 'Pengeluaran' and jenis = 'Kartu'"));
+				              
+				            $total = $query1['kta_plus'] - $query2['kta_min'];
+				            $for = number_format($total,0,",",".");
+			        	?>
+			        	<div class="table-responsive">
+				            <table class="table table-bordered table-striped table-hover" id="example14">
+				              	<thead>
+					                <tr>
+					                  <th>NO</th>
+					                  <th>PJ</th>
+					                  <th>STATUS</th>
+					                  <th>TANGGAL</th>
+					                  <th>KETERANGAN</th>
+					                  <th>JUMLAH</th> 
+					                  <th>AKSI</th>
+					                </tr>
+				              	</thead>
+				              	<tbody>
+				                	<?php
+					                $no = 1;
+					                while ($r=mysqli_fetch_array($masuk)){
+					                	$idr       = $r['jumlah'];
+	    								$masuk_for = number_format($idr,0,",",".");
+					                ?>
+				                	<tr>
+					                  	<td><?php echo $no; ?></td>
+					                  	<td><?php echo $r['username']?></td>
+					                  	<td>
+							            	<?php
+							            		if ($r['status']=='Pemasukan') {
+							            			echo"<span class='badge bg-green'>$r[status]</span>";
+							            		}
+							            		else{
+							            			echo"<span class='badge bg-yellow'>$r[status]</span>";
+							            		}
+							            	?>
+							            </td>          
+					                  	<td><?php echo $r['tgl']?></td>
+					                  	<td><?php echo $r['keterangan']?></td>
+					                  	<td>Rp. <?php echo $masuk_for ?></td>
+					                  	<td>
+						                    <a class="btn btn-success" href="?module=keuangan&act=edit&id=<?php echo $r['id_keuangan']; ?>"><i class="fa fa-edit"></i></a>
+						                    <a class="btn btn-danger" onclick="return confirm('Apakah anda yakin akan menghapus data ini?')" <?php echo "href=\"$aksi?module=keuangan&act=delete&id=$r[id_keuangan]\""; ?>><i class="fa fa-trash"></i></a>
+					                  	</td>
+				                	</tr>
+					                <?php
+					                  $no++;
+					                }
+					                ?>
+				              	</tbody>
+				              	<tfoot>
+					              	<tr>
+					                  <td align="center" colspan="7" >
+					                  	<h2>
+					                  		<small>Saldo: </small>
+					                  		Rp. <?php echo $for; ?>
+					                  	</h2>
+					                  	
+					                  </td>
+					                </tr>
+				              	</tfoot>
+				            </table>
+			            </div>
+			        </div>
 		        </div>
 		        <!-- /.tab-content -->
         	</div>

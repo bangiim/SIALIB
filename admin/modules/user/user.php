@@ -31,7 +31,7 @@ else{
     </section>
 
     <section class="content">
-      <div class="box box-info">
+      <div class="box box-success">
         <div class="box-header">
           <h3 class="box-title">Jumlah Data User, <?php echo mysqli_num_rows($tampil); ?> Data</h3>
         </div>

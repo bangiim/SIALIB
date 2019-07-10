@@ -33,14 +33,14 @@ else{
 
   // Manajemen User
   elseif ($_GET['module']=='user'){
-    if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+    if ($_SESSION['leveluser']=='admin'){
       include "modules/user/user.php";
     }
   }
 
     // iedntitas
   elseif ($_GET['module']=='identitas'){
-    if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+    if ($_SESSION['leveluser']=='admin'){
       include "modules/identitas/identitas.php";
     }
   }

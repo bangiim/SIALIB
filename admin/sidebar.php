@@ -36,6 +36,9 @@ else{
     </form>
     <!-- /.search form -->
     <!-- sidebar menu: : style can be found in sidebar.less -->
+    <?php
+    if ($_SESSION['leveluser']=='admin') {
+    ?>
     <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
         <li class="active">
@@ -81,6 +84,49 @@ else{
         <li><a href="../index.php" target="blank"><i class="fa fa-circle-o text-green"></i> <span>View Website</span></a></li>
         <li><a href="logout.php"><i class="fa fa-circle-o text-red"></i> <span>Logout</span></a></li>
     </ul>
+    <?php
+    }
+    else
+    {
+    ?>
+    <ul class="sidebar-menu" data-widget="tree">
+        <li class="header">MAIN NAVIGATION</li>
+        <li class="active">
+            <a href="?module=dashboard">
+                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+            </a>
+        </li>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-file-text-o"></i> <span>Thesis Data</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="#"><i class="fa fa-cloud-upload"></i> Upload</a></li>
+                <li><a href="#"><i class="fa fa-list"></i> List</a></li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-money"></i> <span>Keuangan</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="?module=keuangan"><i class="fa fa-usd"></i> Kelola Keuangan</a></li>
+                <li><a href="modules/keuangan/print_data.php" target="blank"><i class="fa fa-print"></i> Laporan Keuangan</a></li>
+            </ul>
+        </li>
+        <li class="header">LABELS</li>
+        <li><a href="../index.php" target="blank"><i class="fa fa-circle-o text-green"></i> <span>View Website</span></a></li>
+        <li><a href="logout.php"><i class="fa fa-circle-o text-red"></i> <span>Logout</span></a></li>
+    </ul>
+    <?php
+    }
+    ?>
 </section>
 <?php
 }

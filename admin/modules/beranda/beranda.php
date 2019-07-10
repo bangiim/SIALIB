@@ -15,7 +15,7 @@
   <!-- Small boxes (Stat box) -->
   <!-- ROW 1-->
   <div class="row">
-    <div class="col-lg-4 col-xs-6">
+    <div class="col-lg-4 col-xs-12">
       <!-- box SALDO -->
       <div class="small-box bg-red">
         <div class="inner">
@@ -32,11 +32,11 @@
         <div class="icon">
           <i class="fa fa-money"></i>
         </div>
-        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        <a href="?module=keuangan" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div>
     <!-- ./col -->
-    <div class="col-lg-4 col-xs-6">
+    <div class="col-lg-4 col-xs-12">
       <!-- box PEMASUKAN -->
       <div class="small-box bg-green">
         <div class="inner">
@@ -53,11 +53,11 @@
         <div class="icon">
           <i class="fa fa-download"></i>
         </div>
-        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        <a href="?module=keuangan" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div>
     <!-- ./col -->
-    <div class="col-lg-4 col-xs-6">
+    <div class="col-lg-4 col-xs-12">
       <!-- box PENGELUARAN-->
       <div class="small-box bg-yellow">
         <div class="inner">
@@ -74,7 +74,7 @@
         <div class="icon">
           <i class="fa fa-upload"></i>
         </div>
-        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        <a href="?module=keuangan" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div>
     <!-- ./col -->
@@ -83,7 +83,7 @@
 
   <!-- ROW 2-->
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-6 col-xs-12">
       <!-- Custom Tabs (Pulled to the right) -->
       <div class="nav-tabs-custom">
         <ul class="nav nav-tabs pull-right">
@@ -98,11 +98,11 @@
         <div class="tab-content">
           <div class="tab-pane active" id="tab_1">
             <?php 
-              $query = "SELECT status , SUM(jumlah) AS denda FROM keuangan WHERE status = 'Pemasukan' and jenis = 'Denda'";
-              $view = mysqli_query($connect, $query);
-              $r=mysqli_fetch_array($view);
-              $idr = $r['denda'];
-              $for = number_format($idr,0,",",".");
+              $query1  = mysqli_fetch_array(mysqli_query($connect, "SELECT status , SUM(jumlah) AS denda_plus FROM keuangan WHERE status = 'Pemasukan' and jenis = 'Denda'"));
+              $query2 = mysqli_fetch_array(mysqli_query($connect, "SELECT status , SUM(jumlah) AS denda_min FROM keuangan WHERE status = 'Pengeluaran' and jenis = 'Denda'"));
+              
+              $total = $query1['denda_plus'] - $query2['denda_min'];
+              $for = number_format($total,0,",",".");
             ?>
             <center>
               <h1>
@@ -115,11 +115,11 @@
           <!-- /.tab-pane -->
           <div class="tab-pane" id="tab_2">
             <?php 
-              $query = "SELECT status , SUM(jumlah) AS fc FROM keuangan WHERE status = 'Pemasukan' and jenis = 'Fotocopy'";
-              $view = mysqli_query($connect, $query);
-              $r=mysqli_fetch_array($view);
-              $idr = $r['fc'];
-              $for = number_format($idr,0,",",".");
+              $query1  = mysqli_fetch_array(mysqli_query($connect, "SELECT status , SUM(jumlah) AS fc_plus FROM keuangan WHERE status = 'Pemasukan' and jenis = 'Fotocopy'"));
+              $query2 = mysqli_fetch_array(mysqli_query($connect, "SELECT status , SUM(jumlah) AS fc_min FROM keuangan WHERE status = 'Pengeluaran' and jenis = 'Fotocopy'"));
+              
+              $total = $query1['fc_plus'] - $query2['fc_min'];
+              $for = number_format($total,0,",",".");
             ?>
             <center>
               <h1>
@@ -132,11 +132,11 @@
           <!-- /.tab-pane -->
           <div class="tab-pane" id="tab_3">
             <?php 
-              $query = "SELECT status , SUM(jumlah) AS buku FROM keuangan WHERE status = 'Pemasukan' and jenis = 'Buku'";
-              $view = mysqli_query($connect, $query);
-              $r=mysqli_fetch_array($view);
-              $idr = $r['buku'];
-              $for = number_format($idr,0,",",".");
+              $query1  = mysqli_fetch_array(mysqli_query($connect, "SELECT status , SUM(jumlah) AS buku_plus FROM keuangan WHERE status = 'Pemasukan' and jenis = 'Buku'"));
+              $query2 = mysqli_fetch_array(mysqli_query($connect, "SELECT status , SUM(jumlah) AS buku_min FROM keuangan WHERE status = 'Pengeluaran' and jenis = 'Buku'"));
+              
+              $total = $query1['buku_plus'] - $query2['buku_min'];
+              $for = number_format($total,0,",",".");
             ?>
             <center>
               <h1>
@@ -149,11 +149,11 @@
           <!-- /.tab-pane -->
           <div class="tab-pane" id="tab_4">
             <?php 
-              $query = "SELECT status , SUM(jumlah) AS jr FROM keuangan WHERE status = 'Pemasukan' and jenis = 'Jurnal'";
-              $view = mysqli_query($connect, $query);
-              $r=mysqli_fetch_array($view);
-              $idr = $r['jr'];
-              $for = number_format($idr,0,",",".");
+              $query1  = mysqli_fetch_array(mysqli_query($connect, "SELECT status , SUM(jumlah) AS jr_plus FROM keuangan WHERE status = 'Pemasukan' and jenis = 'Jurnal'"));
+              $query2 = mysqli_fetch_array(mysqli_query($connect, "SELECT status , SUM(jumlah) AS jr_min FROM keuangan WHERE status = 'Pengeluaran' and jenis = 'Jurnal'"));
+              
+              $total = $query1['jr_plus'] - $query2['jr_min'];
+              $for = number_format($total,0,",",".");
             ?>
             <center>
               <h1>
@@ -166,11 +166,11 @@
           <!-- /.tab-pane -->
           <div class="tab-pane" id="tab_5">
             <?php 
-              $query = "SELECT status , SUM(jumlah) AS kta FROM keuangan WHERE status = 'Pemasukan' and jenis = 'Kartu'";
-              $view = mysqli_query($connect, $query);
-              $r=mysqli_fetch_array($view);
-              $idr = $r['kta'];
-              $for = number_format($idr,0,",",".");
+              $query1  = mysqli_fetch_array(mysqli_query($connect, "SELECT status , SUM(jumlah) AS kta_plus FROM keuangan WHERE status = 'Pemasukan' and jenis = 'Kartu'"));
+              $query2 = mysqli_fetch_array(mysqli_query($connect, "SELECT status , SUM(jumlah) AS kta_min FROM keuangan WHERE status = 'Pengeluaran' and jenis = 'Kartu'"));
+              
+              $total = $query1['kta_plus'] - $query2['kta_min'];
+              $for = number_format($total,0,",",".");
             ?>
             <center>
               <h1>
@@ -187,7 +187,7 @@
       <!-- nav-tabs-custom -->
     </div>
     <!-- /.col -->
-    <div class="col-md-6">
+    <div class="col-md-6 col-xs-12">
       <div class="box box-primary">
         <div class="box-header with-border">
           <h3 class="box-title"><i class="fa fa-book"></i> <b>Thesis Data</b></h3>

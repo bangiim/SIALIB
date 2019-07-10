@@ -21,7 +21,7 @@ if (!ctype_alnum($injeksi_username) OR !ctype_alnum($injeksi_password)){
         self.history.back();</script>";
 }
 else{
-  $query  = "SELECT * FROM users WHERE username='admin' AND password='admin'";
+  $query  = "SELECT * FROM users WHERE username='$username' AND password='$pass_enkripsi'";
   $login  = mysqli_query($connect, $query);
   $ketemu = mysqli_num_rows($login);
   $r      = mysqli_fetch_array($login); 

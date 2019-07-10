@@ -3,7 +3,7 @@ session_start();
 // Apabila user belum login
 if (empty($_SESSION['namauser']) AND empty($_SESSION['passuser'])){
     echo  "<script>window.alert('Untuk mengakses modul, Anda harus login dulu.');
-        window.location = 'index.php'</script>"  
+        window.location = 'index.php'</script>";  
 }
     // Apabila user sudah login dengan benar, maka terbentuklah session
 else{
@@ -51,14 +51,14 @@ else{
 		$pass_enkripsi = md5($pengacak . md5($password) . $pengacak);
 
 	    // Apabila password tidak diganti diubah
-		if (empty($password) && empty($nama_file)) {
+		if (empty($password)) {
 			$update = "UPDATE users SET nama_lengkap = '$nama_lengkap',
 				    					       email = '$email'
 				                       WHERE id_user = '$id'";
 			mysqli_query($connect, $update);
 		}
 		// Apabila password diubah
-		elseif ($password)
+		else
 		{
 		    $update = "UPDATE users SET nama_lengkap = '$nama_lengkap',
 				    						password = '$pass_enkripsi',
@@ -72,7 +72,7 @@ else{
 
 	// Delete User
 	elseif($module=='user' AND $act=='delete'){
-	    mysqli_query($konek, "DELETE FROM users WHERE id_user='$_GET[id]'");
+	    mysqli_query($connect, "DELETE FROM users WHERE id_user='$_GET[id]'");
     	header("location:../../media.php?module=".$module);
 	}
 }
