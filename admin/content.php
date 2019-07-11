@@ -24,6 +24,13 @@ else{
     }
   }
 
+  // tesis_skripsi
+  elseif ($_GET['module']=='tesis_skripsi'){
+    if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+      include "modules/tesis_skripsi/tesis_skripsi.php";
+    }
+  }
+
   // Print Laporan
   elseif ($_GET['module']=='print'){
     if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){

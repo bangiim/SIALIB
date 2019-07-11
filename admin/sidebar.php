@@ -54,7 +54,7 @@ else{
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-cloud-upload"></i> Upload</a></li>
+                <li><a href="?module=tesis_skripsi"><i class="fa fa-cloud-upload"></i> Upload</a></li>
                 <li><a href="#"><i class="fa fa-list"></i> List</a></li>
             </ul>
         </li>
@@ -104,7 +104,7 @@ else{
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-cloud-upload"></i> Upload</a></li>
+                <li><a href="?module=tesis_skripsi"><i class="fa fa-cloud-upload"></i> Upload</a></li>
                 <li><a href="#"><i class="fa fa-list"></i> List</a></li>
             </ul>
         </li>
