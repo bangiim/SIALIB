@@ -6,7 +6,7 @@ if (empty($_SESSION['namauser']) AND empty($_SESSION['passuser'])){
 }
 // Apabila user sudah login dengan benar, maka terbentuklah session
 else{
-  $aksi = "modules/user/aksi_user.php";
+  $aksi = "modules/tesis/aksi.php";
 
   // mengatasi variabel yang belum di definisikan (notice undefined index)
   $act = isset($_GET['act']) ? $_GET['act'] : '';
@@ -20,13 +20,13 @@ else{
 ?>  
     <section class="content-header">
       <h1>
-        Data User
+        Tesis Dan Skripsi
         <small>advanced tables</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#">Tables</a></li>
-        <li class="active">Data User</li>
+        <li class="active">Data Tesis Dan Skripsi</li>
       </ol>
     </section>
 
@@ -40,20 +40,20 @@ else{
           <?php 
             if (isset($_SESSION['namauser'])): 
           ?>
-            <a href="?module=user&act=tambahuser" style="margin-bottom: 10px;" class="btn btn-md btn-primary"> <i class="fa fa-plus"></i> Tambah Data User</a>
+            <a href="?module=user&act=tambahuser" style="margin-bottom: 10px;" class="btn btn-md btn-primary"> <i class="fa fa-plus"></i> Tambah Data</a>
           <?php endif; ?>
       
           <div class="table-responsive">
             <table class="table table-bordered table-hover" id="example1">
               <thead>
                 <tr>
-                  <th>NO</th>
-                  <th>PENULIS</th>
-                  <th>JUDUL</th>
-                  <th>TAHUN</th> 
-                  <th>PRODI</th>
-                  <th>jhjhghgjh</th>
-                  <th>AKSI</th>
+                  <th width="5px">NO</th>
+                  <th width="10px">NIM</th>
+                  <th width="10px">PENULIS</th>
+                  <th width="30px">JUDUL</th>
+                  <th width="10px">TAHUN</th> 
+                  <th width="30px">PRODI</th>
+                  <th width="5px">AKSI</th>
                 </tr>
               </thead>
               <tbody>
@@ -62,14 +62,15 @@ else{
                 while ($r=mysqli_fetch_array($tampil)){
                 ?>
                 <tr>
-                  <td><?php echo $no; ?></td>          
+                  <td><?php echo $no; ?></td>  
+                  <td><?php echo $r['nim']?></td>        
                   <td><?php echo $r['author']?></td>
                   <td><?php echo $r['title']?></td>
                   <td><?php echo $r['year']?></td>
                   <td><?php echo $r['prodi']?></td>
                   <td>
-                    <a class="btn btn-success" href="?module=user&act=edituser&id=<?php echo $r['id_user']; ?>"><i class="fa fa-edit"></i></a>
-                    <a class="btn btn-danger" onclick="return confirm('Apakah anda yakin akan menghapus data ini?')" <?php echo "href=\"$aksi?module=user&act=delete&id=$r[id_user]\""; ?>><i class="fa fa-trash"></i></a>
+                    <a class="btn btn-success btn-xs" href="?module=tesis_skripsi&act=editdatat&id=<?php echo $r['id']; ?>"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-danger btn-xs" onclick="return confirm('Apakah anda yakin akan menghapus data ini?')" <?php echo "href=\"$aksi?module=tesis_skripsi&act=delete&id=$r[id]\""; ?>><i class="fa fa-trash"></i></a>
                   </td>
                 </tr>
                 <?php

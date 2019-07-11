@@ -33,7 +33,7 @@ if (isset($_POST['upload'])){
   }
   else {
     if (in_array($ekstensi, $harusekstensi)==true){
-      if($size < 10000000){
+      if($size < 15000000){
         move_uploaded_file($file_tmp, 'pdffiles/'.$nama);
         $create = "INSERT INTO skripsi(nim,title,author,category,year,abstract,fakultas,prodi,filename,
         uploadtime)VALUES('$nim','$title','$author','$category','$year','$abstract','$fakultas','$prodi','$nama','$uploadtime')";

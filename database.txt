@@ -1,0 +1,141 @@
+-- phpMyAdmin SQL Dump
+-- version 4.4.14
+-- http://www.phpmyadmin.net
+--
+-- Host: 127.0.0.1
+-- Generation Time: Jul 11, 2019 at 09:06 AM
+-- Server version: 5.6.26
+-- PHP Version: 5.6.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `dbsialib`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `identitas`
+--
+
+CREATE TABLE IF NOT EXISTS `identitas` (
+  `id_identitas` int(1) NOT NULL,
+  `nama_pemilik` varchar(100) NOT NULL,
+  `judul_website` varchar(100) NOT NULL,
+  `alamat_website` varchar(100) NOT NULL,
+  `meta_deskripsi` varchar(200) NOT NULL,
+  `meta_keyword` varchar(200) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `favicon` varchar(50) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `keuangan`
+--
+
+CREATE TABLE IF NOT EXISTS `keuangan` (
+  `id_keuangan` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `status` enum('Pemasukan','Pengeluaran') NOT NULL DEFAULT 'Pemasukan',
+  `jenis` enum('Denda','Fotocopy','Kartu','Jurnal','Buku') NOT NULL DEFAULT 'Denda',
+  `tgl` date NOT NULL,
+  `keterangan` text NOT NULL,
+  `jumlah` text NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+
+--
+-- Table structure for table `skripsi`
+--
+
+CREATE TABLE IF NOT EXISTS `skripsi` (
+  `id` int(10) NOT NULL,
+  `nim` varchar(15) DEFAULT NULL,
+  `title` text,
+  `author` varchar(25) DEFAULT NULL,
+  `abstract` text,
+  `category` varchar(30) DEFAULT NULL,
+  `year` varchar(4) DEFAULT NULL,
+  `fakultas` varchar(10) DEFAULT NULL,
+  `prodi` varchar(50) DEFAULT NULL,
+  `filename` varchar(50) DEFAULT NULL,
+  `uploadtime` datetime DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE IF NOT EXISTS `users` (
+  `id_user` int(3) unsigned zerofill NOT NULL,
+  `nama_lengkap` varchar(30) DEFAULT NULL,
+  `username` varchar(30) DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `foto` varchar(100) DEFAULT NULL,
+  `level` enum('admin','user') DEFAULT 'user',
+  `id_session` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `identitas`
+--
+ALTER TABLE `identitas`
+  ADD PRIMARY KEY (`id_identitas`);
+
+--
+-- Indexes for table `keuangan`
+--
+ALTER TABLE `keuangan`
+  ADD PRIMARY KEY (`id_keuangan`);
+
+--
+-- Indexes for table `skripsi`
+--
+ALTER TABLE `skripsi`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id_user`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `identitas`
+--
+ALTER TABLE `identitas`
+  MODIFY `id_identitas` int(1) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `keuangan`
+--
+ALTER TABLE `keuangan`
+  MODIFY `id_keuangan` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=30;
+--
+-- AUTO_INCREMENT for table `skripsi`
+--
+ALTER TABLE `skripsi`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=58;
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id_user` int(3) unsigned zerofill NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
