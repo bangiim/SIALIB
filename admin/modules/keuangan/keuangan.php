@@ -444,7 +444,7 @@ else{
     <!-- Tambah keuangan -->
     <?php
     case "tambah":
-      if ($_SESSION['leveluser']=='admin'){
+      if ($_SESSION['leveluser']=='admin' or $_SESSION['leveluser']=='user'){
       ?>
         <section class="content-header">
           	<h1>
@@ -533,7 +533,7 @@ else{
       $hasil = mysqli_query($connect, $query);
       $r     = mysqli_fetch_array($hasil);
      
-      if ($_SESSION['leveluser']=='admin'){
+      if ($_SESSION['leveluser']=='admin' or $_SESSION['leveluser']=='user'){
     ?> 
         <section class="content-header">
           <h1>

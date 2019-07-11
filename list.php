@@ -106,10 +106,11 @@
                                                   <thead>
                                                     <tr>
                                                       <th width="5px">NO</th>
+                                                      <th width="10px">NIM</th>
                                                       <th width="10px">PENULIS</th>
                                                       <th width="30px">JUDUL</th>
                                                       <th width="10px">TAHUN</th> 
-                                                      <th width="40px">PRODI</th>
+                                                      <th width="30px">PRODI</th>
                                                       <th width="5px">AKSI</th>
                                                     </tr>
                                                   </thead>
@@ -122,14 +123,15 @@
                                                     while ($r=mysqli_fetch_array($tampil)){
                                                     ?>
                                                     <tr>
-                                                      <td><?php echo $no; ?></td>          
+                                                      <td><?php echo $no; ?></td>  
+                                                      <td><?php echo $r['nim']?></td>        
                                                       <td><?php echo $r['author']?></td>
                                                       <td><?php echo $r['title']?></td>
                                                       <td><?php echo $r['year']?></td>
                                                       <td><?php echo $r['prodi']?></td>
                                                       <td>
-                                                        <a class="btn btn-success" href="#"><i class="fa fa-eye"></i></a>
-                                                        
+                                                        <a href="#myModal" class="btn btn-success" id="custId" data-toggle="modal" data-id="<?php echo $r['id']?>"><i class="fa fa-eye"></i></a>
+                                                        </button>
                                                       </td>
                                                     </tr>
                                                     <?php
@@ -145,6 +147,8 @@
                                     <!-- /.col -->
                                 </div>
                                 <!-- /.row -->
+                                
+                                
                             </section>
                         </div>
                         <!-- /.box -->
@@ -154,6 +158,22 @@
             </div>
             <!-- /.container -->
         </div>
+        <!-- Tampil MODAL PopUp PDF / DOC -->
+        <div class="modal fade" id="myModal" role="dialog">
+              <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      </div>
+                      <div class="modal-body">
+                          <div class="fetched-data"></div>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
         <!-- /.content-wrapper -->
         <footer class="main-footer">
             <div class="container">
@@ -186,15 +206,31 @@
     <script>
         $(function() {
             $('#example1').DataTable()
-            $('#example2').DataTable({
-                'paging': true,
-                'lengthChange': false,
-                'searching': false,
-                'ordering': true,
-                'info': true,
-                'autoWidth': false
-            })
         })
+    </script>
+
+    <script language="JavaScript">
+      document.addEventListener("contextmenu", function(e){
+          e.preventDefault();
+      }, false);
+    </script>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+          $('#myModal').on('show.bs.modal', function (e) {
+              var rowid = $(e.relatedTarget).data('id');
+              //menggunakan fungsi ajax untuk pengambilan data
+              $.ajax({
+                  type : 'post',
+                  url  : 'ambildata.php',
+                  data :  'rowid='+ rowid,
+                  success : function(data){
+                  $('.fetched-data').html(data);//menampilkan data ke dalam modal
+                  }
+              });
+
+           });
+      });
     </script>
 </body>
 </html>

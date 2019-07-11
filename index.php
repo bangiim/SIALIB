@@ -111,15 +111,15 @@
                 </div>
                 <div class="form-group">
                   <label for="abstrak">Abstarak</label>
-                  <textarea class="form-control" name="abstract" row="3" placeholder="Abstrak" required></textarea>
+                  <textarea class="form-control" name="abstract" row="5" placeholder="Abstrak" required></textarea>
                 </div>
-                <!-- <div class="form-group">
+                <div class="form-group">
                   <label class="control-label">Kategori</label>
                   <select name="category" class="form-control">
                     <option value="Skripsi">Skripsi</option>
-                    <option value="Tesis">Tesis</option>
+                    <option value="Thesis">Thesis</option>
                   </select>
-                </div> -->
+                </div>
                 <!-- tahun -->
                 <div class="form-group">
                   <label class="control-label">Tahun</label>
