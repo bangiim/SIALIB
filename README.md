@@ -1,5 +1,9 @@
-# SIALIB
-(Sistem Informasi Administrasi Library)
+<p align="center">
+    <img src="https://i.ibb.co/8YMp5Jd/logo-SIALIB.png" alt="logo-SIALIB" border="0">
+    <br>
+    <br>
+</p>
+
 
 Introduction
 ============
