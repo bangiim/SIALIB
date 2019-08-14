@@ -9,7 +9,8 @@ if (empty($_SESSION['namauser']) AND empty($_SESSION['passuser'])){
 else{
   include "../config/db.php";
   $d     = mysqli_fetch_array(mysqli_query($connect, "SELECT * FROM identitas"));
-  $tampil = mysqli_query($connect, "SELECT * FROM users WHERE username='$_SESSION[namauser]'");
+  $tampil = mysqli_query($connect, "SELECT * FROM users a, staff b 
+                                    WHERE b.id_staf=a.id_staf AND username='$_SESSION[namauser]'");
   $r      = mysqli_fetch_array($tampil);
 ?>
 
@@ -20,7 +21,7 @@ else{
         <img src="../dist/img/<?php echo $r['foto'];?>" class="img-circle" alt="User Image">
       </div>
       <div class="pull-left info">
-        <p><?php echo $r['nama_lengkap']; ?></p>
+        <p><?php echo $r['nama']; ?></p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
       </div>
     </div>
@@ -37,6 +38,7 @@ else{
     <!-- /.search form -->
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <?php
+    // Menu Admin //
     if ($_SESSION['leveluser']=='admin') {
     ?>
     <ul class="sidebar-menu" data-widget="tree">
@@ -67,8 +69,14 @@ else{
             </a>
             <ul class="treeview-menu">
                 <li><a href="?module=keuangan"><i class="fa fa-usd"></i> Kelola Keuangan</a></li>
+                <li><a href="?module=hutang"><i class="fa fa-minus"></i> Data Hutang</a></li>
                 <li><a href="modules/keuangan/print_data.php" target="blank"><i class="fa fa-print"></i> Laporan Keuangan</a></li>
             </ul>
+        </li>
+        <li>
+          <a href="?module=staff">
+            <i class="fa fa-smile-o"></i> <span>Staf Perpustakaan</span>
+          </a>
         </li>
         <li>
           <a href="?module=user">
@@ -86,6 +94,7 @@ else{
     </ul>
     <?php
     }
+    // Menu User //
     else
     {
     ?>
@@ -117,6 +126,7 @@ else{
             </a>
             <ul class="treeview-menu">
                 <li><a href="?module=keuangan"><i class="fa fa-usd"></i> Kelola Keuangan</a></li>
+                <li><a href="?module=hutang"><i class="fa fa-minus"></i> Data Hutang</a></li>
                 <li><a href="modules/keuangan/print_data.php" target="blank"><i class="fa fa-print"></i> Laporan Keuangan</a></li>
             </ul>
         </li>

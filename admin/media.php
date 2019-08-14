@@ -76,11 +76,12 @@ else{
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <?php
                include "../config/db.php";
-               $tampil = mysqli_query($connect, "SELECT * FROM users WHERE username='$_SESSION[namauser]'");
+               $tampil = mysqli_query($connect, "SELECT * FROM users a, staff b 
+                                                 WHERE b.id_staf=a.id_staf AND username='$_SESSION[namauser]'");
                $r      = mysqli_fetch_array($tampil);
                ?>
               <img src="../dist/img/<?php echo $r['foto'];?>" class="user-image" alt="User Image">
-              <span class="hidden-xs"><?php echo $r['nama_lengkap']; ?></span>
+              <span class="hidden-xs"><?php echo $r['nama']; ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -88,7 +89,7 @@ else{
                 <img src="../dist/img/<?php echo $r['foto'];?>" class="img-circle" alt="User Image">
 
                 <p>
-                  <?php echo $r['nama_lengkap']; ?> 
+                  <?php echo $r['nama']; ?> 
                 </p>
               </li>
               
@@ -126,13 +127,46 @@ else{
         require "content.php";
     ?>
   </div>
+  <!-- Tampil MODAL PopUp Detail -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="fetched-data"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">
+                  <i class="fa fa-close"></i> Close</button>
+            </div>
+        </div>
+    </div>
+  </div>
+  <!-- Tampil MODAL PopUp Edit -->
+  <div class="modal fade" id="myModalEdit" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="fetched-data"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">
+                  <i class="fa fa-close"></i> Close</button>
+            </div>
+        </div>
+    </div>
+  </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
-      <b>Version</b> 2.4.12
+      <b>Version</b> 1.0
     </div>
-    <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE</a>.</strong> All rights
-    reserved.
+    <strong>Copyright &copy; 2019 <a href="https://192.168.25.212/opac">UNIDA Gontor Library </a>.</strong> All rights reserved.
   </footer>
 
   <!-- Control Sidebar -->
@@ -393,9 +427,49 @@ else{
 
   //Date picker
   $('#datepicker').datepicker({
-    format: 'yyyy-dd-mm',
+    format: 'yyyy-mm-dd',
     autoclose: true
   })
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+      $('#myModal').on('show.bs.modal', function (e) {
+          var rowid = $(e.relatedTarget).data('id');
+
+          if (true) {
+            
+          }
+          //menggunakan fungsi ajax untuk pengambilan data
+          $.ajax({
+              type : 'post',
+              url  : 'modules/keuangan/ambildatahutang.php',
+              data :  'rowid='+ rowid,
+              success : function(data){
+              $('.fetched-data').html(data);//menampilkan data ke dalam modal
+              }
+          });
+
+       });
+  });
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+      $('#myModalEdit').on('show.bs.modal', function (e) {
+          var rowid = $(e.relatedTarget).data('id');
+          //menggunakan fungsi ajax untuk pengambilan data
+          $.ajax({
+              type : 'post',
+              url  : 'modules/keuangan/editdatahutang.php',
+              data :  'rowid='+ rowid,
+              success : function(data){
+              $('.fetched-data').html(data);//menampilkan data ke dalam modal
+              }
+          });
+
+       });
+  });
 </script>
 
 </body>

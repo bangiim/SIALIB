@@ -2,7 +2,7 @@
 require_once "../config/db.php";
 require_once "../config/fungsi_antiinjection.php";
 
-$username = anti_injection($_POST['username']);
+$email    = anti_injection($_POST['email']);
 $password = anti_injection($_POST['password']);
 
     // perlu dibuat sebarang pengacak
@@ -12,16 +12,15 @@ $password = anti_injection($_POST['password']);
     $pass_enkripsi = md5($pengacak . md5($password) . $pengacak);
 
 // menghindari sql injection
-$injeksi_username = mysqli_real_escape_string($connect, $username);
 $injeksi_password = mysqli_real_escape_string($connect, $pass_enkripsi);
 
 // pastikan username dan password adalah berupa huruf atau angka.
-if (!ctype_alnum($injeksi_username) OR !ctype_alnum($injeksi_password)){
+if (!ctype_alnum($injeksi_password)){
   echo "<script>window.alert('Sekarang loginnya tidak bisa di injeksi lho.');
         self.history.back();</script>";
 }
 else{
-  $query  = "SELECT * FROM users WHERE username='$username' AND password='$pass_enkripsi'";
+  $query  = "SELECT * FROM users WHERE email='$email' AND password='$pass_enkripsi'";
   $login  = mysqli_query($connect, $query);
   $ketemu = mysqli_num_rows($login);
   $r      = mysqli_fetch_array($login); 
@@ -29,7 +28,7 @@ else{
   // Apabila username dan password ditemukan (benar)
   if ($ketemu > 0){
     session_start();
-    //require_once "config/timeout.php";
+    require_once "../config/timeout.php";
 
     // bikin variabel session
     $_SESSION['namauser']    = $r['username'];
@@ -38,13 +37,13 @@ else{
     $_SESSION['email']       = $r['email'];
     $_SESSION['leveluser']   = $r['level'];
       
-    // session timeout
-   // $_SESSION[login] = 1;
-   // timer();
+    //session timeout
+    $_SESSION['login'] = 1;
+    timer();
     // bikin id_session yang unik dan mengupdatenya agar slalu berubah 
     // agar user biasa sulit untuk mengganti password Administrator 
     $sid_lama = session_id();
-	  session_regenerate_id();
+    session_regenerate_id();
     $sid_baru = session_id();
     mysqli_query($connect, "UPDATE users SET id_session='$sid_baru' WHERE username='$username'");
     

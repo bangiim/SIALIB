@@ -8,6 +8,7 @@ if (empty($_SESSION['namauser']) AND empty($_SESSION['passuser'])){
 
 else{
   include "../config/db.php";
+  include "../config/tgl_indo.php";
 
 
   // Home (Beranda)
@@ -17,13 +18,6 @@ else{
     }  
   }
 
-  // Keuangan
-  elseif ($_GET['module']=='keuangan'){
-    if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
-      include "modules/keuangan/keuangan.php";
-    }
-  }
-
   // tesis_skripsi
   elseif ($_GET['module']=='tesis_skripsi'){
     if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
@@ -31,10 +25,31 @@ else{
     }
   }
 
+  // Keuangan
+  elseif ($_GET['module']=='keuangan'){
+    if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+      include "modules/keuangan/keuangan.php";
+    }
+  }
+
+  // Hutang
+  elseif ($_GET['module']=='hutang'){
+    if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+      include "modules/keuangan/hutang.php";
+    }
+  }
+
   // Print Laporan
   elseif ($_GET['module']=='print'){
     if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
       include "modules/keuangan/print_data.php";
+    }
+  }
+
+  // Staf Perpustakaan
+  elseif ($_GET['module']=='staff'){
+    if ($_SESSION['leveluser']=='admin'){
+      include "modules/staff/staff.php";
     }
   }
 

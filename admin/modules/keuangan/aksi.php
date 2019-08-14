@@ -30,6 +30,23 @@ else{
                window.location = '../../media.php?module=keuangan'</script>";	    
 	}
 
+	// Input HUtang
+	elseif ($module=='hutang' AND $act=='input'){
+		$id_staf     = anti_injection($_POST['id_staf']);
+		$username    = anti_injection($_POST['username']);
+		$status      = anti_injection($_POST['status']);
+		$jenis		 = anti_injection($_POST['jenis']); 
+		$tgl		 = anti_injection($_POST['tgl']);
+		$jumlah		 = anti_injection($_POST['jumlah']);
+
+		$input = "INSERT INTO keuangan(id_staf, username, status, jenis, tgl, jumlah) 
+				VALUES('$id_staf', '$username', '$status', '$jenis', '$tgl', '$jumlah')";
+		mysqli_query($connect, $input);
+
+		echo "<script>alert('Data Berhasil Di Tambah'); 
+               window.location = '../../media.php?module=hutang'</script>";	    
+	}
+
 	// Update keuangan
 	elseif ($module=='keuangan' AND $act=='update'){
 		$id          = $_POST['id'];
@@ -53,6 +70,31 @@ else{
 		mysqli_query($connect, $update);	 
 		echo "<script>alert('Data Berhasil Di Update'); 
                 window.location = '../../media.php?module=keuangan'</script>";
+	}
+
+	// Update hutang
+	elseif ($module=='hutang' AND $act=='update'){
+		$id          = $_POST['id'];
+		$id_staf     = anti_injection($_POST['id_staf']);
+		$username    = anti_injection($_POST['username']);
+		$status      = anti_injection($_POST['status']);
+		$jenis		 = anti_injection($_POST['jenis']); 
+		$tgl		 = anti_injection($_POST['tgl']);
+		$jumlah		 = anti_injection($_POST['jumlah']);
+
+
+
+	    $update = "UPDATE keuangan SET id_staf    = '$id_staf',
+	    							   username   = '$username',
+	    							   status     = '$status',
+			    					   jenis      = '$jenis',
+			    					   tgl        = '$tgl',
+			    					   jumlah     = '$jumlah'
+			                   WHERE id_keuangan  = '$id'";
+
+		mysqli_query($connect, $update);	 
+		echo "<script>alert('Data Berhasil Di Update'); 
+                window.location = '../../media.php?module=hutang'</script>";
 	}
 
 	// Delete keuangan

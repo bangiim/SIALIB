@@ -15,7 +15,7 @@ else{
     // Tampil User
     default:
 
-    $query  = "SELECT * FROM users ORDER BY username";
+    $query  = "SELECT * FROM users a, staff b WHERE b.id_staf=a.id_staf ORDER BY username";
     $tampil = mysqli_query($connect, $query);
 ?>  
     <section class="content-header">
@@ -61,7 +61,7 @@ else{
                 ?>
                 <tr>
                   <td><?php echo $no; ?></td>          
-                  <td><?php echo $r['nama_lengkap']?></td>
+                  <td><?php echo $r['nama']?></td>
                   <td><?php echo $r['username']?></td>
                   <td><?php echo $r['email']?></td>
                   <td>
@@ -111,7 +111,15 @@ else{
                     <form role="form" method="post" enctype="multipart/form-data" <?php echo "action=\"$aksi?module=user&act=input\""; ?>>
                       <div class="form-group">
                         <label>Nama Lengkap</label>
-                        <input type="text" class="form-control" name="nama_lengkap" placeholder="Nama Lengkap" value=""/>
+                        <select class='form-control' name='id_staf' >
+                          <?php
+                            $staff = mysqli_query($connect, "SELECT * FROM staff");
+                            echo "<option>-- Please select --</option>";
+                            while($s = mysqli_fetch_array($staff)){
+                                echo "<option value=\"".$s['id_staf']."\">".$s['nama']."</option>\n";
+                            }
+                          ?>
+                        </select>
                       </div>
                       <div class="form-group">
                         <label>Username</label>
@@ -180,11 +188,16 @@ else{
                       <input type="hidden" name="id" value="<?php echo $r['id_user']; ?>">
                       <div class="form-group">
                         <label>Nama Lengkap</label>
-                        <input type="text" class="form-control" name="nama_lengkap" placeholder="Nama Lengkap" value="<?php echo $r['nama_lengkap'] ?>"/>
+                        <?php
+                          $staff = mysqli_query($connect, "SELECT * FROM staff WHERE id_staf='$r[id_staf]'");
+                          $a     = mysqli_fetch_array($staff);
+                        ?>
+
+                         <input type="text" class="form-control" name="id_staf" value="<?php echo $a['nama'] ?>" readonly="readonly"/>
                       </div>
                       <div class="form-group">
                         <label>Username</label>
-                        <input type="text" class="form-control" name="username" placeholder="Username" value="<?php echo $r['username'] ?>" disabled/>
+                        <input type="text" class="form-control" name="username" placeholder="Username" value="<?php echo $r['username'] ?>" readonly="readonly"/>
                       </div>
                       <div class="form-group">
                         <label>Password</label>

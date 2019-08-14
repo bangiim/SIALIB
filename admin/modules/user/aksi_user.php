@@ -16,10 +16,10 @@ else{
 
   	// Input user
 	if ($module=='user' AND $act=='input'){
-		$username     = anti_injection($_POST['username']);
-		$password     = anti_injection($_POST['password']);
-		$nama_lengkap = anti_injection($_POST['nama_lengkap']); 
-		$email        = anti_injection($_POST['email']);
+		$username = anti_injection($_POST['username']);
+		$password = anti_injection($_POST['password']);
+		$id_staf  = anti_injection($_POST['id_staf']); 
+		$email    = anti_injection($_POST['email']);
 
 		// perlu dibuat sebarang pengacak
 		$pengacak  = "L1BR4rYUN!D490nToR102496B15M!LL4H";
@@ -29,8 +29,8 @@ else{
 
 	
 
-		$input = "INSERT INTO users(nama_lengkap, username, password, email, foto, level) 
-				VALUES('$nama_lengkap', '$username', '$pass_enkripsi', '$email', 'avatar5.png', 'admin')";
+		$input = "INSERT INTO users(id_staf, username, password, email, foto, level) 
+				VALUES('$id_staf', '$username', '$pass_enkripsi', '$email', 'avatar5.png', 'admin')";
 		mysqli_query($connect, $input);
 		echo "<script>alert('Data Berhasil Di Tambah'); 
                window.location = '../../media.php?module=user'</script>";	    
@@ -40,9 +40,9 @@ else{
 	elseif ($module=='user' AND $act=='update'){
 		$id           = $_POST['id'];
 		//$username     = anti_injection($_POST['username']);
-		$password     = anti_injection($_POST['password']);
-		$nama_lengkap = anti_injection($_POST['nama_lengkap']); 
-		$email        = anti_injection($_POST['email']);
+		//$id_staf   = anti_injection($_POST['id_staf']); 
+		$password  = anti_injection($_POST['password']);
+		$email     = anti_injection($_POST['email']);
 
 		// perlu dibuat sebarang pengacak
 		$pengacak  = "L1BR4rYUN!D490nToR102496B15M!LL4H";
@@ -52,18 +52,15 @@ else{
 
 	    // Apabila password tidak diganti diubah
 		if (empty($password)) {
-			$update = "UPDATE users SET nama_lengkap = '$nama_lengkap',
-				    					       email = '$email'
-				                       WHERE id_user = '$id'";
+			$update = "UPDATE users SET email = '$email' WHERE id_user = '$id'";
 			mysqli_query($connect, $update);
 		}
 		// Apabila password diubah
 		else
 		{
-		    $update = "UPDATE users SET nama_lengkap = '$nama_lengkap',
-				    						password = '$pass_enkripsi',
-				                               email = '$email'
-				                       WHERE id_user = '$id'";
+		    $update = "UPDATE users SET password = '$pass_enkripsi',
+				                        email    = '$email'
+				                   WHERE id_user = '$id'";
 			mysqli_query($connect, $update);	 
 		}
 		echo "<script>alert('Data Berhasil Di Update'); 
